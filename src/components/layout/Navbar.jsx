@@ -48,7 +48,7 @@ const Navbar = () => {
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="container navbar-content">
                 <div className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>
-                    Storminc<span className="dot">.</span>eu
+                    Storm Inc
                 </div>
                 <ul className="nav-links">
                     <li><button onClick={() => scrollToSection('services')}>Services</button></li>

@@ -6,9 +6,9 @@ const Footer = () => {
             <div className="container footer-content">
                 <div className="footer-left">
                     <div className="logo">
-                        Storminc<span className="dot">.</span>eu
+                        Storm Inc
                     </div>
-                    <p className="copyright">© {new Date().getFullYear()} Storminc.eu. All rights reserved.</p>
+                    <p className="copyright">© {new Date().getFullYear()} Storm Inc. All rights reserved.</p>
                 </div>
                 <div className="footer-right">
                     {/* Social icons or links could go here */}

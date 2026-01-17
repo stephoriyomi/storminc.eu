@@ -39,6 +39,8 @@
     display: flex;
     gap: var(--spacing-lg);
     align-items: center;
+    list-style: none;
+    /* Remove bullets */
 }
 
 .nav-links button {
@@ -72,6 +74,57 @@
     /* No bounce in corporate */
 }
 
+/* Mobile Menu Styles */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    z-index: 1001;
+}
+
+.hamburger .bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.hamburger .bar:nth-child(1) {
+    top: 0;
+}
+
+.hamburger .bar:nth-child(2) {
+    top: 9px;
+}
+
+.hamburger .bar:nth-child(3) {
+    top: 18px;
+}
+
+/* Hamburger Animation */
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg);
+    top: 9px;
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 9px;
+}
+
+/* Dark mode hamburger */
+[data-theme='dark'] .hamburger .bar {
+    background-color: white;
+}
+
 /* Dark Theme Adaptations if enabled */
 [data-theme='dark'] .navbar {
     background: #0b1120;
@@ -88,4 +141,58 @@
 
 [data-theme='dark'] .nav-links button:hover {
     color: var(--color-secondary);
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: var(--bg-app);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        border-left: 1px solid var(--border-light);
+        z-index: 1000;
+        padding: 2rem;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    /* Backdrop blur for modern feel */
+    @supports (backdrop-filter: blur(10px)) {
+        .nav-links {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme='dark'] .nav-links {
+            background: rgba(11, 17, 32, 0.95);
+        }
+    }
+
+    .nav-links button {
+        font-size: 1.2rem;
+    }
+
+    /* Force links to be visible in mobile menu */
+    .nav-links button {
+        color: var(--text-main);
+    }
+
+    [data-theme='dark'] .nav-links button {
+        color: white;
+    }
 }

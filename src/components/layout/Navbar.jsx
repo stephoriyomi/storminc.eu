@@ -5,6 +5,8 @@ const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [isDark, setIsDark] = useState(false);
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     useEffect(() => {
         // Check system preference or saved preference
         const savedTheme = localStorage.getItem('theme');
@@ -37,10 +39,15 @@ const Navbar = () => {
         }
     };
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     const scrollToSection = (id) => {
         const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
+            setIsMenuOpen(false); // Close menu on click
         }
     };
 
@@ -50,7 +57,14 @@ const Navbar = () => {
                 <div className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>
                     Storm Inc
                 </div>
-                <ul className="nav-links">
+
+                <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                </div>
+
+                <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
                     <li><button onClick={() => scrollToSection('services')}>Services</button></li>
                     <li><button onClick={() => scrollToSection('about')}>Approach</button></li>
                     <li className="theme-toggle">

@@ -1,0 +1,25 @@
+.footer {
+    background: var(--bg-surface);
+    padding: var(--spacing-xl) 0;
+    margin-top: auto;
+    border-top: 1px solid var(--border-light);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer .logo {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.copyright {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}

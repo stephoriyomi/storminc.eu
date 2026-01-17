@@ -1,0 +1,50 @@
+.challenges-section {
+  padding: 5rem 0;
+  background: var(--bg-app);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.challenges-title {
+  text-align: center;
+  font-size: 2.25rem;
+  margin-bottom: 3rem;
+  color: var(--text-header);
+  font-weight: 700;
+}
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.challenge-card {
+  text-align: center;
+  padding: 1rem;
+}
+
+.check-circle {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 168, 232, 0.1);
+  color: #00a8e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 auto 1.5rem;
+}
+
+.challenge-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: #0f2b46;
+}
+
+.challenge-card p {
+  font-size: 1rem;
+  color: #64748b;
+  line-height: 1.5;
+}

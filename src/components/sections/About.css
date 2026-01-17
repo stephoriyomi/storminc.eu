@@ -1,0 +1,119 @@
+.about-section {
+    padding: var(--spacing-xxl) 0;
+    background: var(--bg-app);
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+    padding: 0 var(--spacing-md);
+}
+
+.about-text h2 {
+    color: var(--text-header);
+}
+
+.about-text p {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.8;
+    padding-right: var(--spacing-lg);
+}
+
+.feature-list li {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-main);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.feature-list li strong {
+    color: var(--color-secondary);
+}
+
+.about-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.visual-card {
+    background: var(--bg-surface);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    width: 100%;
+    max-width: 450px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    /* Ensure space for chart */
+}
+
+/* Radar Chart Styles */
+.radar-chart {
+    width: 100%;
+    height: auto;
+    max-width: 350px;
+    overflow: visible;
+}
+
+.radar-poly {
+    opacity: 0.8;
+    transform-origin: center;
+    animation: pulseRadar 3s infinite ease-in-out;
+    filter: drop-shadow(0 0 10px rgba(0, 168, 232, 0.2));
+}
+
+.radar-point circle {
+    transform-origin: center;
+    transition: r 0.3s ease;
+}
+
+.radar-point:hover circle {
+    r: 6;
+    fill: var(--color-accent);
+}
+
+.radar-point text {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    /* Let clicks pass to circle */
+}
+
+@keyframes pulseRadar {
+    0% {
+        transform: scale(0.98);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(0.98);
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .about-text p {
+        padding-right: 0;
+    }
+}

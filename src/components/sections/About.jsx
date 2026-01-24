@@ -9,7 +9,7 @@ const About = () => {
                     <div className="about-text">
                         <h2 className="section-title">Built for Growth</h2>
                         <p>
-                            At Stormin.eu, we bridge the gap between complex data technologies and business value.
+                            At Storm Inc., we bridge the gap between complex data technologies and business value.
                             We specialize in helping startups and mid-size businesses establish their data foundations without the overhead of massive enterprise solutions.
                         </p>
                         <ul className="feature-list">

@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="container footer-content">
                 <div className="footer-left">
                     <div className="logo">
-                        Storm Inc
+                        Storm Inc.
                     </div>
                     <p className="copyright">© {new Date().getFullYear()} Storm Inc. All rights reserved.</p>
                 </div>

@@ -55,7 +55,7 @@ const Navbar = () => {
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="container navbar-content">
                 <div className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>
-                    Storm Inc
+                    Storm Inc.
                 </div>
 
                 <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>

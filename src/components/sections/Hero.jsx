@@ -7,7 +7,7 @@ const Hero = () => {
 
       <div className="container hero-content">
         <h1 className="hero-title">
-          Data Engineering Services <br /> for Better Decisions
+          Data Analytics & Engineering Services <br /> for Better Decisions
         </h1>
         <p className="hero-subtitle">
           Drive informed decisions with scalable data pipelines, secure data lakes, and future-ready architecture. We turn raw data into your most valuable asset.

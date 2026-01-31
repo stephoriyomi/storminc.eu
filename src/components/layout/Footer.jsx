@@ -1,4 +1,5 @@
 import './Footer.css';
+import StormLogo from '../../assets/Storm Inc Logo.svg';
 
 const Footer = () => {
     return (
@@ -6,7 +7,7 @@ const Footer = () => {
             <div className="container footer-content">
                 <div className="footer-left">
                     <div className="logo">
-                        Storm Inc.
+                        <img src={StormLogo} alt="Storm Inc." className="logo-img" />
                     </div>
                     <p className="copyright">© {new Date().getFullYear()} Storm Inc. All rights reserved.</p>
                 </div>

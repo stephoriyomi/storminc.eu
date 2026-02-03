@@ -131,7 +131,7 @@
     border-bottom-color: #1e293b;
 }
 
-[data-theme='dark'] .logo {
+[data-theme='dark'] .navbar .logo-img {
     color: white;
 }
 

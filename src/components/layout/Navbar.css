@@ -24,15 +24,15 @@
 }
 
 .logo {
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: #0f2b46;
-    /* Always Navy in light navbar */
-    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
 }
 
-.logo .dot {
-    color: var(--color-secondary);
+.logo-img {
+    height: 24.5px; /* Base 35px reduced by 30% */
+    width: auto;
+    color: #14304a; /* Default text color for light mode */
+    transition: color var(--transition-fast);
 }
 
 .nav-links {
@@ -131,7 +131,7 @@
     border-bottom-color: #1e293b;
 }
 
-[data-theme='dark'] .logo {
+[data-theme='dark'] .navbar .logo-img {
     color: white;
 }
 

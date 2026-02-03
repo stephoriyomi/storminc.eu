@@ -15,8 +15,17 @@
 }
 
 .footer .logo {
-    font-size: 1.25rem;
     margin-bottom: var(--spacing-xs);
+}
+
+.footer .logo-img {
+    height: 24.5px; /* Same as navbar - 35px reduced by 30% */
+    width: auto;
+    color: #14304a; /* Default text color for light mode */
+}
+
+[data-theme='dark'] .footer .logo-img {
+    color: white;
 }
 
 .copyright {

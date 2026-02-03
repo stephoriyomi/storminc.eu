@@ -1,4 +1,5 @@
 import './Footer.css';
+import Logo from '../ui/Logo';
 
 const Footer = () => {
     return (
@@ -6,7 +7,7 @@ const Footer = () => {
             <div className="container footer-content">
                 <div className="footer-left">
                     <div className="logo">
-                        Storm Inc
+                        <Logo className="logo-img" />
                     </div>
                     <p className="copyright">© {new Date().getFullYear()} Storm Inc. All rights reserved.</p>
                 </div>

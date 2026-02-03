@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
-import Logo from '../ui/Logo';
+import StormLogo from './StormLogo';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -56,7 +56,7 @@ const Navbar = () => {
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="container navbar-content">
                 <div className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>
-                    <Logo className="logo-img" />
+                    <StormLogo className="logo-img" />
                 </div>
 
                 <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>

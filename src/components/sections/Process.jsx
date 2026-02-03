@@ -1,9 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import FadeIn from '../ui/FadeIn';
 import './Process.css';
 
 const Process = () => {
     const [activeStep, setActiveStep] = useState(null);
+    const [chartVisible, setChartVisible] = useState(false);
+    const chartRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setChartVisible(true);
+                    observer.disconnect(); // Only animate once
+                }
+            },
+            { threshold: 0.2 }
+        );
+
+        if (chartRef.current) {
+            observer.observe(chartRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     const steps = [
         { num: "01", title: "Discovery", desc: "Current state assessment & data strategy", value: "25%" },
@@ -36,7 +56,7 @@ const Process = () => {
 
                     <div className="process-visual">
                         <FadeIn delay={0.3}>
-                            <div className="chart-container">
+                            <div className="chart-container" ref={chartRef}>
                                 <h3 className="chart-title">Value Generation Over Time</h3>
                                 <div className="bar-chart">
                                     {steps.map((step, index) => (
@@ -47,7 +67,7 @@ const Process = () => {
                                             onMouseLeave={() => setActiveStep(null)}
                                         >
                                             <div
-                                                className="bar"
+                                                className={`bar ${chartVisible ? 'animate' : ''}`}
                                                 style={{ height: step.value, animationDelay: `${0.5 + (index * 0.2)}s` }}
                                             >
                                                 <div className="bar-tooltip">{step.value} Value</div>

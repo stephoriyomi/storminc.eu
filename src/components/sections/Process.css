@@ -96,7 +96,6 @@
     background: linear-gradient(to top, #00a8e8, #00d4ff);
     border-radius: 4px 4px 0 0;
     transform-origin: bottom;
-    animation: growBar 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     transform: scaleY(0);
     opacity: 0.8;
     box-shadow: 0 0 20px rgba(0, 168, 232, 0.2);
@@ -104,6 +103,10 @@
     position: relative;
     display: flex;
     justify-content: center;
+}
+
+.bar.animate {
+    animation: growBar 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .bar-wrapper:hover .bar,

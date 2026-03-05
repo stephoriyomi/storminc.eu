@@ -15,20 +15,21 @@
 }
 
 .footer .logo {
+    display: flex;
+    align-items: center;
     margin-bottom: var(--spacing-xs);
 }
 
 .footer .logo-img {
-    height: 24.5px; /* Same as navbar - 35px reduced by 30% */
+    height: 22px;
     width: auto;
-    color: #14304a; /* Default text color for light mode */
-}
-
-[data-theme='dark'] .footer .logo-img {
-    color: white;
 }
 
 .copyright {
     color: var(--text-muted);
     font-size: 0.875rem;
+}
+
+[data-theme='dark'] .footer .logo-img {
+    filter: brightness(0) invert(1);
 }

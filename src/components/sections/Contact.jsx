@@ -2,20 +2,51 @@ import { useState } from 'react';
 import FadeIn from '../ui/FadeIn';
 import './Contact.css';
 
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
 const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         message: ''
     });
+    const [status, setStatus] = useState('idle'); // idle | loading | success | error
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Thanks for reaching out! We will get back to you soon.");
+        setStatus('loading');
+        setErrorMessage('');
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    access_key: WEB3FORMS_ACCESS_KEY,
+                    subject: `New contact from ${formData.name}`,
+                    from_name: formData.name,
+                    ...formData
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                setStatus('error');
+                setErrorMessage(result.message || 'Something went wrong. Please try again.');
+            }
+        } catch {
+            setStatus('error');
+            setErrorMessage('Network error. Please check your connection and try again.');
+        }
     };
 
     return (
@@ -26,45 +57,73 @@ const Contact = () => {
                 </FadeIn>
                 <FadeIn delay={0.2}>
                     <div className="contact-card">
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="name">Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="John Doe"
-                                />
+                        {status === 'success' ? (
+                            <div className="form-status form-success">
+                                <h3>Message Sent!</h3>
+                                <p>Thanks for reaching out. We'll get back to you soon.</p>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary submit-btn"
+                                    onClick={() => setStatus('idle')}
+                                >
+                                    Send Another Message
+                                </button>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="john@company.com"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="message">Message</label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    rows="5"
-                                    placeholder="Tell us about your data needs..."
-                                ></textarea>
-                            </div>
-                            <button type="submit" className="btn btn-primary submit-btn">Send Message</button>
-                        </form>
+                        ) : (
+                            <form onSubmit={handleSubmit}>
+                                {status === 'error' && (
+                                    <div className="form-status form-error">
+                                        <p>{errorMessage}</p>
+                                    </div>
+                                )}
+                                <div className="form-group">
+                                    <label htmlFor="name">Name</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="John Doe"
+                                        disabled={status === 'loading'}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="email">Email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="john@company.com"
+                                        disabled={status === 'loading'}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="message">Message</label>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        rows="5"
+                                        placeholder="Tell us about your data needs..."
+                                        disabled={status === 'loading'}
+                                    ></textarea>
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary submit-btn"
+                                    disabled={status === 'loading'}
+                                >
+                                    {status === 'loading' ? 'Sending...' : 'Send Message'}
+                                </button>
+                            </form>
+                        )}
                     </div>
                 </FadeIn>
             </div>

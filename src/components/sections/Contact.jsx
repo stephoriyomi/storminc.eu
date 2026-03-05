@@ -2,48 +2,50 @@ import { useState } from 'react';
 import FadeIn from '../ui/FadeIn';
 import './Contact.css';
 
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
 const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         message: ''
     });
+    const [status, setStatus] = useState('idle'); // idle | loading | success | error
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const [status, setStatus] = useState(null); // null, 'sending', 'success', 'error'
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatus('sending');
+        setStatus('loading');
+        setErrorMessage('');
 
         try {
-            const response = await fetch("https://formsubmit.co/ajax/support@storminc.eu", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    message: formData.message,
-                    _subject: `New Project Inquiry from ${formData.name}`,
-                    _template: 'table' // Optional: Makes email look nicer
+                    access_key: WEB3FORMS_ACCESS_KEY,
+                    subject: `New Project Inquiry from ${formData.name}`,
+                    from_name: formData.name,
+                    ...formData
                 })
             });
 
-            if (response.ok) {
+            const result = await response.json();
+
+            if (result.success) {
                 setStatus('success');
                 setFormData({ name: '', email: '', message: '' });
             } else {
                 setStatus('error');
+                setErrorMessage(result.message || 'Something went wrong. Please try again.');
             }
-        } catch (error) {
-            console.error(error);
+        } catch {
             setStatus('error');
+            setErrorMessage('Network error. Please check your connection and try again.');
         }
     };
 
@@ -56,21 +58,24 @@ const Contact = () => {
                 <FadeIn delay={0.2}>
                     <div className="contact-card">
                         {status === 'success' ? (
-                            <div className="success-message" style={{ textAlign: 'center', padding: '2rem', color: '#10b981' }}>
+                            <div className="form-status form-success">
                                 <h3>Message Sent!</h3>
-                                <p style={{ color: 'var(--text-main)', marginTop: '0.5rem' }}>
-                                    Thanks for reaching out! We'll allow 24-48 hours for a response.
-                                </p>
+                                <p>Thanks for reaching out! We'll get back to you within 24-48 hours.</p>
                                 <button
-                                    onClick={() => setStatus(null)}
-                                    className="btn btn-primary"
-                                    style={{ marginTop: '1.5rem' }}
+                                    type="button"
+                                    className="btn btn-primary submit-btn"
+                                    onClick={() => setStatus('idle')}
                                 >
-                                    Send Another
+                                    Send Another Message
                                 </button>
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit}>
+                                {status === 'error' && (
+                                    <div className="form-status form-error">
+                                        <p>{errorMessage}</p>
+                                    </div>
+                                )}
                                 <div className="form-group">
                                     <label htmlFor="name">Name</label>
                                     <input
@@ -81,6 +86,7 @@ const Contact = () => {
                                         onChange={handleChange}
                                         required
                                         placeholder="John Doe"
+                                        disabled={status === 'loading'}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -93,6 +99,7 @@ const Contact = () => {
                                         onChange={handleChange}
                                         required
                                         placeholder="john@company.com"
+                                        disabled={status === 'loading'}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -105,20 +112,16 @@ const Contact = () => {
                                         required
                                         rows="5"
                                         placeholder="Tell us about your data needs..."
+                                        disabled={status === 'loading'}
                                     ></textarea>
                                 </div>
                                 <button
                                     type="submit"
                                     className="btn btn-primary submit-btn"
-                                    disabled={status === 'sending'}
+                                    disabled={status === 'loading'}
                                 >
-                                    {status === 'sending' ? 'Sending...' : 'Send Message'}
+                                    {status === 'loading' ? 'Sending...' : 'Send Message'}
                                 </button>
-                                {status === 'error' && (
-                                    <p style={{ color: '#ef4444', marginTop: '1rem', textAlign: 'center' }}>
-                                        Something went wrong. Please try again later.
-                                    </p>
-                                )}
                             </form>
                         )}
                     </div>

@@ -1,9 +1,10 @@
 import './Hero.css';
+import ShaderBackground from '../ui/shader-background';
 
 const Hero = () => {
   return (
     <section className="hero">
-      <div className="hero-background"></div>
+      <ShaderBackground />
 
       <div className="container hero-content">
         <h1 className="hero-title">

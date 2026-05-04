@@ -1,85 +1,93 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import FadeIn from '../ui/FadeIn';
 import './Process.css';
 
+const steps = [
+    {
+        num: "01",
+        title: "Discovery",
+        weeks: "1-2",
+        desc: "Audit current state. Map systems, stakeholders, and data flows. Output: a prioritized roadmap with effort + impact estimates.",
+        deliverable: "Strategy memo + RACI"
+    },
+    {
+        num: "02",
+        title: "Design",
+        weeks: "2-3",
+        desc: "Architecture blueprint with explicit tradeoffs. We argue with you, not at you. Decision logs become onboarding docs later.",
+        deliverable: "Architecture diagrams + ADRs"
+    },
+    {
+        num: "03",
+        title: "Build",
+        weeks: "4-8",
+        desc: "Iterative delivery in two-week increments. Demo-driven. Tests, lineage, and documentation ship with the code.",
+        deliverable: "Production pipelines + CI/CD"
+    },
+    {
+        num: "04",
+        title: "Hand-off",
+        weeks: "1-2",
+        desc: "Runbooks, on-call playbooks, and pair programming. We leave when your team can extend the system without us.",
+        deliverable: "Runbooks + 30-day support"
+    }
+];
+
 const Process = () => {
-    const [activeStep, setActiveStep] = useState(null);
-    const [chartVisible, setChartVisible] = useState(false);
-    const chartRef = useRef(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setChartVisible(true);
-                    observer.disconnect(); // Only animate once
-                }
-            },
-            { threshold: 0.2 }
-        );
-
-        if (chartRef.current) {
-            observer.observe(chartRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
-
-    const steps = [
-        { num: "01", title: "Discovery", desc: "Current state assessment & data strategy", value: "25%" },
-        { num: "02", title: "Design", desc: "Architecture blueprint & roadmap", value: "50%" },
-        { num: "03", title: "Implementation", desc: "Agile development & deployment", value: "75%" },
-        { num: "04", title: "Evolution", desc: "Continuous optimization & support", value: "100%" }
-    ];
+    const [active, setActive] = useState(0);
 
     return (
-        <section className="process-section">
+        <section className="process-section section">
             <div className="container">
-                <h2 className="section-title text-center">Our Approach</h2>
+                <div className="section-label"><span>03</span><span>Process</span></div>
+                <h2 className="section-title">
+                    A predictable path from kickoff to hand-off.
+                </h2>
+                <p className="process-intro">
+                    Engagements typically run 8–14 weeks. You'll know what's shipping, when,
+                    and what 'done' looks like — at every step.
+                </p>
 
-                <div className="process-split">
-                    <div className="process-grid">
-                        {steps.map((step, index) => (
-                            <FadeIn key={index} delay={index * 0.1}>
-                                <div
-                                    className={`process-step ${activeStep === index ? 'active' : ''}`}
-                                    onMouseEnter={() => setActiveStep(index)}
-                                    onMouseLeave={() => setActiveStep(null)}
-                                >
-                                    <div className="step-num">{step.num}</div>
-                                    <h3>{step.title}</h3>
-                                    <p>{step.desc}</p>
-                                </div>
-                            </FadeIn>
+                <div className="timeline">
+                    <div className="timeline-track" aria-hidden="true" />
+                    <div className="timeline-steps">
+                        {steps.map((step, i) => (
+                            <button
+                                key={i}
+                                className={`timeline-node ${active === i ? 'active' : ''}`}
+                                onMouseEnter={() => setActive(i)}
+                                onFocus={() => setActive(i)}
+                                onClick={() => setActive(i)}
+                            >
+                                <div className="node-marker" />
+                                <div className="node-num">{step.num}</div>
+                                <div className="node-title">{step.title}</div>
+                                <div className="node-weeks">wk {step.weeks}</div>
+                            </button>
                         ))}
                     </div>
-
-                    <div className="process-visual">
-                        <FadeIn delay={0.3}>
-                            <div className="chart-container" ref={chartRef}>
-                                <h3 className="chart-title">Value Generation Over Time</h3>
-                                <div className="bar-chart">
-                                    {steps.map((step, index) => (
-                                        <div
-                                            key={index}
-                                            className={`bar-wrapper ${activeStep === index ? 'active' : ''}`}
-                                            onMouseEnter={() => setActiveStep(index)}
-                                            onMouseLeave={() => setActiveStep(null)}
-                                        >
-                                            <div
-                                                className={`bar ${chartVisible ? 'animate' : ''}`}
-                                                style={{ height: step.value, animationDelay: `${0.5 + (index * 0.2)}s` }}
-                                            >
-                                                <div className="bar-tooltip">{step.value} Value</div>
-                                            </div>
-                                            <span className="bar-label">Phase {index + 1}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </FadeIn>
-                    </div>
                 </div>
+
+                <FadeIn>
+                    <div className="step-detail" key={active}>
+                        <div className="detail-left">
+                            <div className="detail-eyebrow">
+                                {steps[active].num} &middot; {steps[active].title}
+                            </div>
+                            <p className="detail-desc">{steps[active].desc}</p>
+                        </div>
+                        <div className="detail-right">
+                            <div>
+                                <div className="detail-eyebrow">Deliverable</div>
+                                <div className="detail-deliverable">{steps[active].deliverable}</div>
+                            </div>
+                            <div>
+                                <div className="detail-eyebrow">Duration</div>
+                                <div className="detail-duration">{steps[active].weeks} weeks</div>
+                            </div>
+                        </div>
+                    </div>
+                </FadeIn>
             </div>
         </section>
     );

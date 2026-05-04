@@ -1,50 +1,56 @@
-.challenges-section {
-  padding: 5rem 0;
-  background: var(--bg-app);
-  border-bottom: 1px solid var(--border-light);
+.outcomes {
+    background: var(--bg-app);
 }
 
-.challenges-title {
-  text-align: center;
-  font-size: 2.25rem;
-  margin-bottom: 3rem;
-  color: var(--text-header);
-  font-weight: 700;
+.outcomes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: var(--space-7);
 }
 
-.challenges-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
+.outcome {
+    background: var(--bg-app);
+    padding: var(--space-7) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition: background-color 0.3s var(--ease);
 }
 
-.challenge-card {
-  text-align: center;
-  padding: 1rem;
+.outcome:hover {
+    background: var(--bg-surface);
 }
 
-.check-circle {
-  width: 50px;
-  height: 50px;
-  background: rgba(0, 168, 232, 0.1);
-  color: #00a8e8;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0 auto 1.5rem;
+.outcome-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-subtle);
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-2);
 }
 
-.challenge-card h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
-  color: #00A8E8;
+.outcome-label {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    line-height: 1.15;
 }
 
-.challenge-card p {
-  font-size: 1rem;
-  color: #FFFFFF;
-  line-height: 1.5;
+.outcome-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    max-width: 380px;
+}
+
+@media (max-width: 700px) {
+    .outcomes-grid { grid-template-columns: 1fr; }
+    .outcome { padding: var(--space-6); }
 }
